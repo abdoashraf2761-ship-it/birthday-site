@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy Birthday My Love</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, #ffe6f0, #fff5f8);
+      color: #333;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    .screen {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      width: 100%;
+      max-width: 500px;
+      background: rgba(255, 255, 255, 0.9);
+      border-radius: 24px;
+      padding: 32px;
+      box-shadow: 0 12px 35px rgba(0, 0, 0, 0.12);
+      text-align: center;
+    }
+
+    h1, h2 {
+      margin-bottom: 16px;
+      color: #d63384;
+    }
+
+    p {
+      line-height: 1.7;
+      margin-bottom: 16px;
+    }
+
+    input[type="password"] {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 12px;
+      margin: 16px 0;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    button {
+      background: #d63384;
+      color: white;
+      border: none;
+      padding: 14px 22px;
+      border-radius: 12px;
+      font-size: 16px;
+      cursor: pointer;
+      transition: 0.25s ease;
+    }
+
+    button:hover {
+      background: #b82c70;
+      transform: translateY(-2px);
+    }
+
+    .error {
+      color: #c62828;
+      margin-top: 10px;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .main-content {
+      padding: 40px 20px 60px;
+      max-width: 1100px;
+      margin: 0 auto;
+      text-align: center;
+    }
+
+    .hero {
+      margin-bottom: 40px;
+    }
+
+    .hero h1 {
+      font-size: 42px;
+      margin-bottom: 14px;
+    }
+
+    .hero p {
+      max-width: 700px;
+      margin: 0 auto;
+      font-size: 18px;
+    }
+
+    .message-box {
+      background: rgba(255,255,255,0.85);
+      border-radius: 20px;
+      padding: 28px;
+      box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+      margin: 30px auto;
+      max-width: 800px;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 18px;
+      margin-top: 30px;
+    }
+
+    .gallery img {
+      width: 100%;
+      height: 280px;
+      object-fit: cover;
+      border-radius: 20px;
+      box-shadow: 0 8px 18px rgba(0,0,0,0.12);
+      transition: transform 0.3s ease;
+    }
+
+    .gallery img:hover {
+      transform: scale(1.03);
+    }
+
+    .footer-note {
+      margin-top: 40px;
+      font-size: 15px;
+      color: #666;
+    }
+
+    .heart {
+      position: fixed;
+      bottom: -20px;
+      font-size: 20px;
+      animation: floatUp 6s linear infinite;
+      opacity: 0.7;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.8);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 32px;
+      }
+
+      .gallery img {
+        height: 220px;
+      }
+
+      .card {
+        padding: 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PASSWORD SCREEN -->
+  <section id="loginScreen" class="screen">
+    <div class="card">
+      <h1>For My Beautiful Girl ❤️</h1>
+      <p>
+        I made something special just for you.<br>
+        Enter the secret password to unlock it.
+      </p>
+
+      <input type="password" id="passwordInput" placeholder="Enter password" />
+      <button onclick="checkPassword()">Unlock</button>
+      <div class="error" id="errorMsg"></div>
+    </div>
+  </section>
+
+  <!-- MAIN WEBSITE -->
+  <main id="mainSite" class="hidden">
+    <div class="main-content">
+      <section class="hero">
+        <h1>Happy Birthday, My Love 🎂💕</h1>
+        <p>
+          Today is all about you — your smile, your heart, and the happiness
+          you bring into my life every single day.
+        </p>
+      </section>
+
+      <section class="message-box">
+        <h2>A Little Message For You</h2>
+        <p>
+          From the day you came into my life, everything became brighter,
+          warmer, and more meaningful.
+        </p>
+        <p>
+          Thank you for being my best friend, my peace, my happiness,
+          and the love of my life.
+        </p>
+        <p>
+          I hope this birthday brings you as much joy as you bring me.
+          You deserve the whole world, and I’ll always do my best to give
+          you all the love in mine.
+        </p>
+        <p>
+          I love you more than words can ever explain. ❤️
+        </p>
+      </section>
+
+      <section>
+        <h2>Our Memories Together 📸</h2>
+        <div class="gallery">
+          <img src="images/photo1.jpg" alt="Us together 1" />
+          <img src="images/photo2.jpg" alt="Us together 2" />
+          <img src="images/photo3.jpg" alt="Us together 3" />
+          <img src="images/photo4.jpg" alt="Us together 4" />
+          <img src="images/photo5.jpg" alt="Us together 5" />
+          <img src="images/photo6.jpg" alt="Us together 6" />
+        </div>
+      </section>
+
+      <div class="footer-note">
+        Made with love, just for you 💖
+      </div>
+    </div>
+  </main>
+
+  <script>
+    // Change this password
+    const correctPassword = "myprincess";
+
+    function checkPassword() {
+      const input = document.getElementById("passwordInput").value;
+      const errorMsg = document.getElementById("errorMsg");
+
+      if (input === correctPassword) {
+        document.getElementById("loginScreen").classList.add("hidden");
+        document.getElementById("mainSite").classList.remove("hidden");
+        startHearts();
+      } else {
+        errorMsg.textContent = "Wrong password, try again ❤️";
+      }
+    }
+
+    function startHearts() {
+      setInterval(() => {
+        const heart = document.createElement("div");
+        heart.className = "heart";
+        heart.innerHTML = "💖";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = (16 + Math.random() * 20) + "px";
+        heart.style.animationDuration = (4 + Math.random() * 4) + "s";
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 7000);
+      }, 500);
+    }
+
+    // allow Enter key
+    document.addEventListener("keydown", function(e) {
+      if (e.key === "Enter") {
+        checkPassword();
+      }
+    });
+  </script>
+</body>
+</html>
