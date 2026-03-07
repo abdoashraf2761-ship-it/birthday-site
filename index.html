@@ -431,23 +431,23 @@
       text-align: center;
       scroll-margin-top: 30px;
       position: relative;
-      z-index: 10;
+      z-index: 20;
     }
 
     .envelope-box.show-envelope {
       display: block;
-      animation: glowReveal 1s ease;
+      animation: envelopeEntrance 0.95s ease;
     }
 
     .envelope-overlay {
       position: fixed;
       inset: 0;
-      background: rgba(29, 17, 22, 0.28);
-      backdrop-filter: blur(2px);
+      background: rgba(20, 10, 16, 0.58);
+      backdrop-filter: blur(6px);
       opacity: 0;
       pointer-events: none;
       transition: opacity 0.7s ease;
-      z-index: 8;
+      z-index: 18;
     }
 
     .envelope-overlay.show {
@@ -456,25 +456,27 @@
 
     .envelope {
       position: relative;
-      width: 320px;
-      height: 210px;
-      margin: 30px auto 18px;
-      perspective: 1400px;
-      filter: drop-shadow(0 24px 30px rgba(214, 51, 132, 0.12));
-      z-index: 11;
+      width: 420px;
+      height: 270px;
+      margin: 34px auto 22px;
+      perspective: 1600px;
+      filter: drop-shadow(0 28px 38px rgba(214, 51, 132, 0.16));
+      z-index: 21;
+      transform-origin: center;
     }
 
     .envelope.shake {
-      animation: tinyShake 0.45s ease;
+      animation: suspenseShake 0.55s ease;
     }
 
     .envelope-body {
       position: absolute;
       inset: 0;
       background: linear-gradient(135deg, #ffd6e7, #ffc0d9);
-      border-radius: 0 0 18px 18px;
-      border: 1px solid rgba(255,255,255,0.72);
+      border-radius: 0 0 22px 22px;
+      border: 1px solid rgba(255,255,255,0.78);
       overflow: hidden;
+      box-shadow: 0 18px 34px rgba(214, 51, 132, 0.12);
     }
 
     .envelope-body::before,
@@ -484,7 +486,7 @@
       top: 0;
       width: 50%;
       height: 100%;
-      background: linear-gradient(135deg, rgba(255,255,255,0.22), rgba(255,255,255,0.04));
+      background: linear-gradient(135deg, rgba(255,255,255,0.26), rgba(255,255,255,0.05));
     }
 
     .envelope-body::before {
@@ -500,23 +502,23 @@
     .envelope-letter {
       position: absolute;
       left: 50%;
-      bottom: 18px;
+      bottom: 22px;
       transform: translateX(-50%);
       width: 84%;
-      height: 74%;
-      background: rgba(255,255,255,0.98);
-      border-radius: 14px;
-      padding: 20px 16px;
+      height: 76%;
+      background: rgba(255,255,255,0.99);
+      border-radius: 16px;
+      padding: 22px 18px;
       display: flex;
       align-items: center;
       justify-content: center;
       text-align: center;
       color: var(--accent);
       font-weight: 700;
-      line-height: 1.6;
+      line-height: 1.7;
       z-index: 1;
-      transition: transform 1.15s ease, opacity 1.15s ease;
-      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+      transition: transform 1.25s ease, opacity 1.25s ease, box-shadow 0.6s ease;
+      box-shadow: 0 14px 30px rgba(0,0,0,0.08);
     }
 
     .envelope-flap {
@@ -524,31 +526,31 @@
       top: 0;
       left: 0;
       width: 100%;
-      height: 112px;
+      height: 145px;
       background: linear-gradient(135deg, #ffb3d1, #ff93bf);
       clip-path: polygon(0 0, 100% 0, 50% 100%);
       transform-origin: top;
-      transition: transform 1.15s ease;
+      transition: transform 1.2s ease;
       z-index: 2;
-      box-shadow: 0 12px 22px rgba(214, 51, 132, 0.12);
+      box-shadow: 0 12px 22px rgba(214, 51, 132, 0.14);
     }
 
     .envelope-seal {
       position: absolute;
       left: 50%;
-      top: 76px;
+      top: 104px;
       transform: translateX(-50%);
-      width: 48px;
-      height: 48px;
+      width: 58px;
+      height: 58px;
       border-radius: 50%;
       background: linear-gradient(135deg, var(--accent), var(--accent-light));
       color: white;
       z-index: 3;
       display: grid;
       place-items: center;
-      box-shadow: 0 8px 18px rgba(214, 51, 132, 0.2), 0 0 18px rgba(255, 133, 179, 0.48);
-      transition: transform 0.85s ease, opacity 0.85s ease, box-shadow 0.4s ease;
-      font-size: 1.1rem;
+      font-size: 1.25rem;
+      box-shadow: 0 10px 22px rgba(214, 51, 132, 0.22), 0 0 24px rgba(255, 133, 179, 0.52);
+      transition: transform 0.9s ease, opacity 0.9s ease;
       animation: sealGlow 1.8s ease-in-out infinite;
     }
 
@@ -557,12 +559,13 @@
     }
 
     .envelope.open .envelope-letter {
-      transform: translateX(-50%) translateY(-128px);
+      transform: translateX(-50%) translateY(-165px) scale(1.02);
       opacity: 0.08;
+      box-shadow: 0 26px 38px rgba(214, 51, 132, 0.1);
     }
 
     .envelope.open .envelope-seal {
-      transform: translateX(-50%) scale(0.6);
+      transform: translateX(-50%) translateY(18px) scale(0.35) rotate(18deg);
       opacity: 0;
     }
 
@@ -855,19 +858,36 @@
 
     @keyframes sealGlow {
       0%, 100% {
-        box-shadow: 0 8px 18px rgba(214, 51, 132, 0.2), 0 0 18px rgba(255, 133, 179, 0.32);
+        box-shadow: 0 10px 22px rgba(214, 51, 132, 0.22), 0 0 24px rgba(255, 133, 179, 0.52);
       }
       50% {
-        box-shadow: 0 8px 18px rgba(214, 51, 132, 0.22), 0 0 28px rgba(255, 133, 179, 0.62);
+        box-shadow: 0 10px 22px rgba(214, 51, 132, 0.24), 0 0 34px rgba(255, 133, 179, 0.72);
       }
     }
 
-    @keyframes tinyShake {
-      0%, 100% { transform: translateX(0); }
-      20% { transform: translateX(-3px) rotate(-1deg); }
-      40% { transform: translateX(3px) rotate(1deg); }
-      60% { transform: translateX(-2px) rotate(-0.8deg); }
-      80% { transform: translateX(2px) rotate(0.8deg); }
+    @keyframes envelopeEntrance {
+      0% {
+        opacity: 0;
+        transform: scale(0.72) translateY(70px);
+      }
+      65% {
+        opacity: 1;
+        transform: scale(1.04) translateY(-8px);
+      }
+      100% {
+        transform: scale(1) translateY(0);
+      }
+    }
+
+    @keyframes suspenseShake {
+      0%, 100% { transform: translateX(0) rotate(0deg); }
+      12% { transform: translateX(-5px) rotate(-1.3deg); }
+      24% { transform: translateX(5px) rotate(1.3deg); }
+      36% { transform: translateX(-4px) rotate(-1deg); }
+      48% { transform: translateX(4px) rotate(1deg); }
+      60% { transform: translateX(-3px) rotate(-0.9deg); }
+      72% { transform: translateX(3px) rotate(0.9deg); }
+      84% { transform: translateX(-2px) rotate(-0.5deg); }
     }
 
     @keyframes slowZoom {
@@ -911,6 +931,17 @@
       }
     }
 
+    @keyframes burstPetal {
+      0% {
+        opacity: 1;
+        transform: translate(0, 0) scale(0.8) rotate(0deg);
+      }
+      100% {
+        opacity: 0;
+        transform: translate(var(--dx), var(--dy)) scale(1.2) rotate(220deg);
+      }
+    }
+
     @media (max-width: 900px) {
       .timeline-grid {
         grid-template-columns: 1fr;
@@ -944,8 +975,22 @@
       }
 
       .envelope {
-        width: 260px;
-        height: 185px;
+        width: 300px;
+        height: 205px;
+      }
+
+      .envelope-flap {
+        height: 112px;
+      }
+
+      .envelope-seal {
+        top: 80px;
+        width: 50px;
+        height: 50px;
+      }
+
+      .envelope.open .envelope-letter {
+        transform: translateX(-50%) translateY(-120px) scale(1.02);
       }
 
       .cinematic-final {
@@ -1428,6 +1473,28 @@ Every single time.
       }).catch(() => {});
     }
 
+    function burstPetals(count = 22) {
+      const petalSet = ["🌸", "🌺", "🪷", "🌼"];
+      for (let i = 0; i < count; i++) {
+        const petal = document.createElement("div");
+        petal.className = "petal";
+        petal.innerHTML = petalSet[Math.floor(Math.random() * petalSet.length)];
+        petal.style.left = "50vw";
+        petal.style.top = "45vh";
+        petal.style.fontSize = (16 + Math.random() * 14) + "px";
+        petal.style.position = "fixed";
+        petal.style.zIndex = "30";
+        petal.style.opacity = "1";
+        petal.style.transform = `translate(${(Math.random() - 0.5) * 40}px, ${(Math.random() - 0.5) * 20}px) rotate(${Math.random() * 60}deg)`;
+        petal.style.animation = `burstPetal ${0.9 + Math.random() * 0.8}s ease-out forwards`;
+        petal.style.setProperty("--dx", `${(Math.random() - 0.5) * 240}px`);
+        petal.style.setProperty("--dy", `${-80 - Math.random() * 180}px`);
+        document.body.appendChild(petal);
+
+        setTimeout(() => petal.remove(), 2200);
+      }
+    }
+
     function openEnvelope() {
       const envelope = document.getElementById("envelope");
       const letterBox = document.getElementById("letterBox");
@@ -1441,6 +1508,7 @@ Every single time.
         envelope.classList.add("open");
         document.body.classList.add("letter-mode");
         fadeInMusic();
+        burstPetals(22);
 
         setTimeout(() => {
           letterBox.classList.add("show-letter");
@@ -1452,11 +1520,11 @@ Every single time.
           if (!typingStarted) {
             setTimeout(() => {
               typeLetter(letterMessage, "typedText", 22);
-            }, 700);
+            }, 800);
             typingStarted = true;
           }
-        }, 1200);
-      }, 450);
+        }, 1350);
+      }, 520);
     }
 
     function escapeHtml(char) {
