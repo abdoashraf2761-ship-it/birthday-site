@@ -440,15 +440,14 @@
     }
 
     .envelope-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(20, 10, 16, 0.58);
-      backdrop-filter: blur(6px);
-      opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.7s ease;
-      z-index: 18;
-    }
+  position: fixed;
+  inset: 0;
+  background: rgba(20, 10, 16, 0.38);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.45s ease;
+  z-index: 18;
+}
 
     .envelope-overlay.show {
       opacity: 1;
@@ -1613,24 +1612,25 @@ Every single time.
     }
 
     function showEnding() {
-      const endingBox = document.getElementById("endingBox");
-      const surpriseBox = document.getElementById("surpriseBox");
-      const overlay = document.getElementById("envelopeOverlay");
+  const endingBox = document.getElementById("endingBox");
+  const surpriseBox = document.getElementById("surpriseBox");
+  const overlay = document.getElementById("envelopeOverlay");
 
-      setTimeout(() => {
-        endingBox.classList.add("show-ending");
-        overlay.classList.remove("show");
+  overlay.classList.remove("show");
 
-        endingBox.scrollIntoView({
-          behavior: "smooth",
-          block: "center"
-        });
+  setTimeout(() => {
+    endingBox.classList.add("show-ending");
 
-        setTimeout(() => {
-          surpriseBox.classList.add("show-surprise");
-        }, 1100);
-      }, 900);
-    }
+    endingBox.scrollIntoView({
+      behavior: "smooth",
+      block: "center"
+    });
+
+    setTimeout(() => {
+      surpriseBox.classList.add("show-surprise");
+    }, 1100);
+  }, 500);
+}
 
     function revealFinalSurprise() {
       const surpriseLine = document.getElementById("surpriseLine");
