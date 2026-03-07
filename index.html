@@ -158,7 +158,6 @@
       transform: translateY(0);
     }
 
-    /* LOADING SCREEN */
     .loading-screen {
       position: fixed;
       inset: 0;
@@ -260,6 +259,8 @@
     }
 
     .counter-box,
+    .timeline-box,
+    .envelope-box,
     .letter-box,
     .slideshow-box,
     .ending-box {
@@ -296,7 +297,8 @@
       transition: 0.3s ease;
     }
 
-    .counter-item:hover {
+    .counter-item:hover,
+    .timeline-card:hover {
       transform: translateY(-4px);
       box-shadow: 0 12px 24px rgba(214, 51, 132, 0.08);
     }
@@ -339,6 +341,116 @@
       color: var(--muted);
       margin-top: 12px;
       font-size: 0.95rem;
+      min-height: 24px;
+    }
+
+    .timeline-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      margin-top: 18px;
+    }
+
+    .timeline-card {
+      background: rgba(255, 255, 255, 0.78);
+      border-radius: 20px;
+      padding: 20px 16px;
+      text-align: center;
+      transition: 0.3s ease;
+    }
+
+    .timeline-date {
+      color: var(--accent);
+      font-size: 1.1rem;
+      font-weight: bold;
+      margin-bottom: 8px;
+    }
+
+    .timeline-text {
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 0.96rem;
+    }
+
+    .envelope-box {
+      display: none;
+      text-align: center;
+      scroll-margin-top: 30px;
+    }
+
+    .envelope-box.show-envelope {
+      display: block;
+      animation: glowReveal 1s ease;
+    }
+
+    .envelope {
+      position: relative;
+      width: 280px;
+      height: 190px;
+      margin: 26px auto 18px;
+      perspective: 1000px;
+    }
+
+    .envelope-body {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #ffd6e7, #ffc0d9);
+      border-radius: 0 0 18px 18px;
+      box-shadow: 0 16px 36px rgba(214, 51, 132, 0.14);
+      border: 1px solid rgba(255,255,255,0.7);
+      overflow: hidden;
+    }
+
+    .envelope-letter {
+      position: absolute;
+      left: 50%;
+      bottom: 16px;
+      transform: translateX(-50%);
+      width: 82%;
+      height: 72%;
+      background: rgba(255,255,255,0.96);
+      border-radius: 12px;
+      padding: 20px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: var(--accent);
+      font-weight: bold;
+      line-height: 1.6;
+      z-index: 1;
+      transition: transform 1s ease, opacity 1s ease;
+      box-shadow: 0 10px 24px rgba(0,0,0,0.08);
+    }
+
+    .envelope-flap {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100px;
+      background: linear-gradient(135deg, #ffb3d1, #ff93bf);
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top;
+      transition: transform 1s ease;
+      z-index: 2;
+      box-shadow: 0 12px 22px rgba(214, 51, 132, 0.12);
+    }
+
+    .envelope.open .envelope-flap {
+      transform: rotateX(180deg);
+    }
+
+    .envelope.open .envelope-letter {
+      transform: translateX(-50%) translateY(-80px);
+      opacity: 0.2;
+    }
+
+    .envelope-subtitle {
+      color: var(--muted);
+      max-width: 680px;
+      margin: 0 auto 18px;
+      line-height: 1.8;
     }
 
     .letter-box {
@@ -499,6 +611,12 @@
       }
     }
 
+    @media (max-width: 900px) {
+      .timeline-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 2.15rem;
@@ -520,11 +638,18 @@
       .loading-title {
         font-size: 1.7rem;
       }
+
+      .envelope {
+        width: 240px;
+        height: 170px;
+      }
     }
 
     @media (max-width: 480px) {
       .card,
       .counter-box,
+      .timeline-box,
+      .envelope-box,
       .letter-box,
       .slideshow-box,
       .ending-box {
@@ -543,7 +668,6 @@
 </head>
 <body>
 
-  <!-- LOADING SCREEN -->
   <div id="loadingScreen" class="loading-screen">
     <div class="loading-content">
       <div class="loading-heart">❤️</div>
@@ -559,12 +683,10 @@
     </div>
   </div>
 
-  <!-- AUDIO -->
   <audio id="bgMusic" loop>
     <source src="music/our-song.mp3" type="audio/mpeg" />
   </audio>
 
-  <!-- PASSWORD SCREEN -->
   <section id="loginScreen" class="screen hidden">
     <div class="card">
       <h1>For My Little Girl ❤️</h1>
@@ -579,7 +701,6 @@
     </div>
   </section>
 
-  <!-- MAIN CONTENT -->
   <main id="mainContent" class="main hidden">
     <section class="hero">
       <h1>Happy Birthday My Little Girl ❤️</h1>
@@ -589,7 +710,7 @@
       </p>
 
       <div class="hero-actions">
-        <button onclick="revealLetter()">Read what I wrote for you</button>
+        <button onclick="showEnvelope()">Read what I wrote for you</button>
         <button class="secondary-btn" id="musicBtn" onclick="toggleMusic()">Play Our Song 🎵</button>
       </div>
     </section>
@@ -621,7 +742,41 @@
       <div class="slideshow-container">
         <img id="slideshowImage" src="images/photo1.jpg" alt="Our memory" />
       </div>
-      <p class="slideshow-note">Every picture with you means the world to me.</p>
+      <p class="slideshow-note" id="slideshowCaption">Every picture with you means the world to me.</p>
+    </section>
+
+    <section class="timeline-box">
+      <h2 class="section-title">The Moments I’ll Never Forget ✨</h2>
+      <div class="timeline-grid">
+        <div class="timeline-card">
+          <div class="timeline-date">01/01/2026</div>
+          <div class="timeline-text">The day we met again… and everything started making sense.</div>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-date">02/01/2026</div>
+          <div class="timeline-text">The day our story started feeling real.</div>
+        </div>
+        <div class="timeline-card">
+          <div class="timeline-date">04/01/2026</div>
+          <div class="timeline-text">The day our hands almost touched, and my heart knew.</div>
+        </div>
+      </div>
+    </section>
+
+    <section class="envelope-box" id="envelopeBox">
+      <h2 class="section-title">Before you read this… 💌</h2>
+      <p class="envelope-subtitle">
+        There’s something waiting for you here, Su.<br>
+        A letter made only for you.
+      </p>
+
+      <div class="envelope" id="envelope">
+        <div class="envelope-body"></div>
+        <div class="envelope-letter">A letter made only for you 💌</div>
+        <div class="envelope-flap"></div>
+      </div>
+
+      <button id="openEnvelopeBtn" onclick="openEnvelope()">Open this ya Su ❤️</button>
     </section>
 
     <section class="letter-box" id="letterBox">
@@ -642,104 +797,89 @@
 
   <script>
     const correctPassword = "habla";
-
-    // RELATIONSHIP START DATE: 04/01/2026 = 4 January 2026
     const relationshipStartDate = new Date("2026-01-04T00:00:00");
 
-    const letterMessage = `Happy birthday to the girl that, the moment I laid my eyes on her, something inside me quietly whispered:
+    const letterMessage = `Happy birthday, my love.
 
-"She is the one."
+Suhaila…
+Or as I usually call you, Su.
 
-Baby, I love you more than words will ever be able to explain.
+Sometimes Susu, when I want to annoy you a little.
 
-From the very first day, you’ve been living in my mind rent-free.
-Not just in my thoughts… but in the quiet moments in between them.
+From the very first moment I laid my eyes on you, something inside me became very quiet.
 
-Some people enter your life slowly.
-But you didn’t.
+Not the kind of quiet that comes from silence…
+but the kind of quiet that happens when your heart suddenly realizes it has found someone special.
 
-You arrived like something my heart had already been waiting for.
+And from that moment, a small voice inside my head kept repeating the same thing:
 
-From the first moment I saw you, I don’t know how to explain it…
-but something about you felt familiar.
+She is the one.
 
-Like my soul had somehow known yours before my mind had the chance to understand it.
+Su, I won’t lie to you.
 
-And when I thought I lost you the first time…
+When I thought I lost you the first time… it really messed me up.
 
-I won’t lie about it.
+Life kept moving.
+Days kept passing.
+But something inside me just felt unfinished.
 
-It really messed me up.
+Like my story had paused somewhere.
 
-Not in a dramatic way.
-Not in a loud way.
-
-But in that quiet way where everything around you keeps moving forward…
-while something inside you just feels stuck.
-
-Like life kept going…
-but a part of me stayed behind with you.
+And that somewhere was you.
 
 Then time passed.
 
 A year and a half.
 
-A year and a half of life continuing, but something still feeling unfinished.
+A year and a half of life moving forward… while a part of me was still hoping our story wasn’t over.
 
-And then something happened that I will never forget for the rest of my life.
+And then something happened that I will never forget.
 
 You said yes.
 
 Yes to meeting me again.
 
-And somehow, in that one moment, life started making sense again.
+And somehow, in that moment, everything started making sense again.
 
-01/01/2026.
+01/01/2026
 
 The day we met again.
 
 I remember sitting there with you, talking… trying to act normal.
 
-But inside my mind, everything was racing.
+But inside my head everything was racing.
 
 Because I didn’t know what you were thinking.
 
-I didn’t know what you felt.
+I didn’t know how you felt.
 
-I didn’t know if you still saw me the same way.
+But one thing I knew for sure, Su…
 
-But what I did know…
-was that I didn’t want to lose you again.
+I didn’t want to lose you again.
 
-Then came the moment I realized something bigger was happening.
+Then came a moment that meant more to me than you will probably ever realize.
 
-02/01/2026.
+02/01/2026
 
 The day your father told my father:
 
-"We are waiting for you."
+We are waiting for you.
 
-And I don’t think you will ever fully understand how much that moment meant to me.
+And in that moment, it felt like the world had quietly aligned in our favor.
 
-Because in that moment, it felt like the world had quietly aligned in our favor.
-
-Like something bigger than us had decided that our story wasn’t finished after all.
+Like our story was always meant to continue.
 
 And then…
 
-04/01/2026.
+04/01/2026
 
 The day I was putting the ring on you.
 
-And for a second, our hands almost touched.
+Our hands almost touched.
 
-It was such a small moment.
+Such a small moment.
 
-So small that someone watching from the outside probably wouldn’t think anything of it.
-
-But to me…
-
-that moment meant everything.
+But to me… it meant everything.
 
 Because that was the moment I realized something.
 
@@ -747,13 +887,11 @@ This was real.
 
 You were real.
 
-And somehow, after all the time, the distance, the doubts, the waiting…
-
-you were still here.
+And somehow, after everything… you were still here.
 
 With me.
 
-And from that moment on… everything started.
+And from that moment on, everything changed.
 
 Not just a relationship.
 
@@ -761,15 +899,13 @@ A life.
 
 A future.
 
-A story that I want to keep writing with you for the rest of my days.
+A story that I want to keep writing with you.
 
-Because the truth is…
+Because the truth is, Su…
 
 You deserve the world.
 
 And if I could, I would give it to you piece by piece.
-
-You are the person who makes everything feel lighter.
 
 You make ordinary days feel special.
 
@@ -783,52 +919,31 @@ You are peace.
 
 You are comfort.
 
-You are the feeling of home in a person.
-
-And if there is one thing I know with absolute certainty, it’s this:
-
-Out of everyone in this world…
-
-I would still choose you.
-
-Every single time.
-
-Without hesitation.
-
-Without fear.
-
-Without doubt.
-
-I would choose you in this life.
-And if there were a thousand other lives after this one,
-I would search through every single one of them until I found you again.
-
-Because a love like this…
-is not something that happens twice.
+You are home.
 
 On Valentine’s Day, I wrote you a letter.
 
-I remember sitting there, thinking about every word, hoping that somehow the feelings behind those words would reach your heart.
-
-It took me an hour to write this, so you better read every single word till the end… because I’m definitely going to ask you about it, ya salooki.
-
-But today… I wanted to do something more than just write another letter.
+But today… I wanted to do something more.
 
 So this time, I decided to step my game up.
 
-I built this entire little world on the internet just so I could tell you something that my heart has been carrying for a long time.
+And just so you know, Su…
 
-Because someone like you deserves more than just words in a message.
+this took me an entire hour to write, so you better read every single word until the end.
+
+Because yes, I will ask you about it later, ya salooki.
+
+I built this little place on the internet just so I could tell you something my heart has been carrying for a long time.
+
+Because someone like you deserves more than just a message.
 
 You deserve effort.
+
 You deserve intention.
+
 You deserve someone who will always go the extra mile just to make you smile.
 
-And if I could build a thousand websites, write a thousand letters, or cross a thousand miles just to remind you how much you mean to me…
-
-I would do it every single time.
-
-Because loving you is not something that feels like work to me.
+And loving you has never felt like work to me.
 
 It feels like the most natural thing my heart has ever done.
 
@@ -837,7 +952,9 @@ You didn’t just walk into my life.
 You changed it.
 
 You changed the way I see the future.
+
 You changed the way I understand love.
+
 You changed the way my heart feels about the world.
 
 And I don’t think you will ever fully realize just how much you mean to me.
@@ -845,21 +962,24 @@ And I don’t think you will ever fully realize just how much you mean to me.
 But I hope this little website shows you at least a small part of it.
 
 Because behind every word here…
+
 behind every memory I wrote…
+
 behind every second you spend reading this…
 
 there is one simple truth.
 
 I love you.
 
-Not in the temporary kind of way.
-Not in the kind of way that fades with time.
+Not the temporary kind of love.
 
-But in the kind of way that grows stronger every single day.
+Not the kind that fades with time.
+
+But the kind of love that grows stronger every day.
 
 The kind of love that stays.
 
-The kind of love that chooses the same person again and again, no matter what life brings.
+The kind of love that chooses the same person again and again.
 
 So today, on your birthday…
 
@@ -867,20 +987,19 @@ I don’t just celebrate the day you were born.
 
 I celebrate the day the world was given the person who would one day become my everything.
 
-Happy birthday, my little girl.
+Suhaila…
 
-And no matter where life takes us…
-no matter how many years pass…
+Out of everyone in this world…
 
-I promise you one thing.
-
-I will always be the man
-who looks at you
-and thanks God that somehow…
-
-out of everyone in this world…
+somehow
 
 I found you.
+
+Happy birthday, my Su.
+
+And I would still choose you.
+
+Every single time.
 
 ❤️`;
 
@@ -893,13 +1012,22 @@ I found you.
       "images/photo6.jpg"
     ];
 
+    const photoCaptions = [
+      "One of my favorite memories of you.",
+      "A moment I will always keep in my heart.",
+      "You looked too beautiful here.",
+      "A memory that still makes me smile.",
+      "Just you… and one more reason I fell harder.",
+      "Every picture with you means the world to me."
+    ];
+
     const highlightPhrases = [
       "She is the one.",
       "You said yes.",
       "We are waiting for you.",
       "You deserve the world.",
-      "I would still choose you.",
-      "I found you."
+      "I found you.",
+      "Happy birthday, my Su."
     ];
 
     let slideIndex = 0;
@@ -947,21 +1075,44 @@ I found you.
       }
     }
 
-    function revealLetter() {
-      const letterBox = document.getElementById("letterBox");
-      letterBox.classList.add("show-letter");
-
-      letterBox.scrollIntoView({
+    function showEnvelope() {
+      const envelopeBox = document.getElementById("envelopeBox");
+      envelopeBox.classList.add("show-envelope");
+      envelopeBox.scrollIntoView({
         behavior: "smooth",
         block: "start"
       });
+    }
 
-      if (!typingStarted) {
-        setTimeout(() => {
-          typeLetter(letterMessage, "typedText", 22);
-        }, 650);
-        typingStarted = true;
+    function openEnvelope() {
+      const envelope = document.getElementById("envelope");
+      const letterBox = document.getElementById("letterBox");
+      const music = document.getElementById("bgMusic");
+      const musicBtn = document.getElementById("musicBtn");
+
+      envelope.classList.add("open");
+
+      if (!musicPlaying) {
+        music.play().then(() => {
+          musicPlaying = true;
+          musicBtn.textContent = "Pause Our Song 🎵";
+        }).catch(() => {});
       }
+
+      setTimeout(() => {
+        letterBox.classList.add("show-letter");
+        letterBox.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+        if (!typingStarted) {
+          setTimeout(() => {
+            typeLetter(letterMessage, "typedText", 22);
+          }, 650);
+          typingStarted = true;
+        }
+      }, 1100);
     }
 
     function escapeHtml(char) {
@@ -1006,7 +1157,6 @@ I found you.
           i++;
 
           let delay = speed;
-
           if (shouldPauseLong(char)) delay = 220;
           else if (shouldPauseMedium(char)) delay = 100;
           else if (char === "\n") delay = 180;
@@ -1034,7 +1184,10 @@ I found you.
 
     function startSlideshow() {
       const img = document.getElementById("slideshowImage");
+      const caption = document.getElementById("slideshowCaption");
       if (!img) return;
+
+      caption.textContent = photoCaptions[0];
 
       setInterval(() => {
         slideIndex = (slideIndex + 1) % photos.length;
@@ -1043,6 +1196,7 @@ I found you.
 
         setTimeout(() => {
           img.src = photos[slideIndex];
+          caption.textContent = photoCaptions[slideIndex] || "Every picture with you means the world to me.";
           img.style.opacity = 1;
           img.style.transform = "scale(1)";
         }, 450);
