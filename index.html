@@ -950,7 +950,36 @@
         font-size: 2.5rem;
       }
     }
+.final-fade{
+  position:fixed;
+  inset:0;
+  background:#0b0609;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  text-align:center;
+  flex-direction:column;
+  color:white;
+  opacity:0;
+  pointer-events:none;
+  transition:opacity 2s ease;
+  z-index:10000;
+}
 
+.final-fade.show{
+  opacity:1;
+}
+
+.final-fade h1{
+  font-size:3rem;
+  margin-bottom:10px;
+  font-family:'Playfair Display', serif;
+}
+
+.final-fade p{
+  font-size:1.2rem;
+  opacity:0.8;
+}
     @media (max-width: 768px) {
       .hero h1 {
         font-size: 2.8rem;
@@ -1188,7 +1217,10 @@
       </div>
     </section>
   </main>
-
+<div id="finalFade" class="final-fade">
+  <h1>Happy Birthday Su ❤️</h1>
+  <p>Always yours.</p>
+</div>
   <script>
     const correctPassword = "habla";
     const relationshipStartDate = new Date("2026-01-04T00:00:00");
@@ -1645,7 +1677,11 @@ Every single time.
           block: "center"
         });
       }, 900);
-    }
+      setTimeout(() => {
+    document.getElementById("finalFade").classList.add("show");
+  }, 9000);
+}
+    
 
     function startSlideshow() {
       const img = document.getElementById("slideshowImage");
@@ -1729,4 +1765,5 @@ Every single time.
   </script>
 </body>
 </html>
+
 
