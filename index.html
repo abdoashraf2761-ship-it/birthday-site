@@ -49,7 +49,7 @@
       color: var(--text);
       overflow-x: hidden;
       position: relative;
-      transition: filter 0.8s ease, background 0.8s ease;
+      transition: filter 0.8s ease, background 0.8s ease, transform 1s ease;
     }
 
     body.letter-mode {
@@ -58,6 +58,10 @@
         radial-gradient(circle at top left, rgba(255,255,255,0.6), transparent 30%),
         radial-gradient(circle at bottom right, rgba(255,255,255,0.45), transparent 30%),
         linear-gradient(135deg, #fff2f7, #ffe8f1, #ffdbe9);
+    }
+
+    body.envelope-focus {
+      transform: scale(1.02);
     }
 
     h1, h2, h3 {
@@ -257,6 +261,66 @@
       font-size: 0.95rem;
     }
 
+    .countdown-card {
+      max-width: 760px;
+    }
+
+    .countdown-title {
+      font-size: 2.8rem;
+      color: var(--accent);
+      margin-bottom: 10px;
+    }
+
+    .countdown-sub {
+      color: var(--muted);
+      margin-bottom: 22px;
+      line-height: 1.9;
+    }
+
+    .count-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin: 24px 0 20px;
+    }
+
+    .count-item {
+      background: rgba(255,255,255,0.74);
+      border-radius: 18px;
+      padding: 20px 10px;
+      box-shadow: 0 10px 24px rgba(214, 51, 132, 0.08);
+    }
+
+    .count-item .num {
+      display: block;
+      color: var(--accent);
+      font-size: 2rem;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+
+    .count-item .lab {
+      color: var(--muted);
+      font-size: 0.92rem;
+    }
+
+    .unlock-note {
+      margin-top: 8px;
+      font-size: 0.96rem;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .mini-timeline {
+      margin: 20px 0 18px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.68);
+      border: 1px solid rgba(214, 51, 132, 0.12);
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
     .hero {
       text-align: center;
       margin-bottom: 30px;
@@ -440,14 +504,14 @@
     }
 
     .envelope-overlay {
-  position: fixed;
-  inset: 0;
-  background: rgba(20, 10, 16, 0.38);
-  opacity: 0;
-  pointer-events: none;
-  transition: opacity 0.45s ease;
-  z-index: 18;
-}
+      position: fixed;
+      inset: 0;
+      background: rgba(20, 10, 16, 0.38);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.45s ease;
+      z-index: 18;
+    }
 
     .envelope-overlay.show {
       opacity: 1;
@@ -792,6 +856,37 @@
       transform: translateY(0);
     }
 
+    .final-fade {
+      position: fixed;
+      inset: 0;
+      background: #0b0609;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      flex-direction: column;
+      color: white;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 2s ease;
+      z-index: 10000;
+    }
+
+    .final-fade.show {
+      opacity: 1;
+    }
+
+    .final-fade h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+      font-family: 'Playfair Display', serif;
+    }
+
+    .final-fade p {
+      font-size: 1.2rem;
+      opacity: 0.8;
+    }
+
     @keyframes gradientMove {
       0% { background-position: 0% 50%; }
       50% { background-position: 100% 50%; }
@@ -950,42 +1045,15 @@
         font-size: 2.5rem;
       }
     }
-.final-fade{
-  position:fixed;
-  inset:0;
-  background:#0b0609;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  text-align:center;
-  flex-direction:column;
-  color:white;
-  opacity:0;
-  pointer-events:none;
-  transition:opacity 2s ease;
-  z-index:10000;
-}
 
-.final-fade.show{
-  opacity:1;
-}
-
-.final-fade h1{
-  font-size:3rem;
-  margin-bottom:10px;
-  font-family:'Playfair Display', serif;
-}
-
-.final-fade p{
-  font-size:1.2rem;
-  opacity:0.8;
-}
     @media (max-width: 768px) {
-      .hero h1 {
+      .hero h1,
+      .countdown-title {
         font-size: 2.8rem;
       }
 
-      .counter {
+      .counter,
+      .count-grid {
         grid-template-columns: repeat(2, 1fr);
       }
 
@@ -1038,7 +1106,8 @@
         padding: 22px 18px;
       }
 
-      .hero h1 {
+      .hero h1,
+      .countdown-title {
         font-size: 2.25rem;
       }
 
@@ -1058,7 +1127,7 @@
 </head>
 <body>
 
-  <div id="loadingScreen" class="loading-screen">
+  <div id="loadingScreen" class="loading-screen hidden">
     <div class="loading-content">
       <div class="loading-heart">❤️</div>
       <h1 class="loading-title">Loading something special…</h1>
@@ -1078,6 +1147,48 @@
   </audio>
 
   <div id="envelopeOverlay" class="envelope-overlay"></div>
+
+  <section id="countdownScreen" class="screen hidden">
+    <div class="card countdown-card">
+      <h1 class="countdown-title">Your surprise opens soon ❤️</h1>
+      <p class="countdown-sub">
+        Something special is waiting for you.<br>
+        It will unlock on your birthday at exactly 12:00 AM.
+      </p>
+
+      <div class="count-grid">
+        <div class="count-item">
+          <span class="num" id="cdDays">0</span>
+          <span class="lab">Days</span>
+        </div>
+        <div class="count-item">
+          <span class="num" id="cdHours">0</span>
+          <span class="lab">Hours</span>
+        </div>
+        <div class="count-item">
+          <span class="num" id="cdMinutes">0</span>
+          <span class="lab">Minutes</span>
+        </div>
+        <div class="count-item">
+          <span class="num" id="cdSeconds">0</span>
+          <span class="lab">Seconds</span>
+        </div>
+      </div>
+
+      <div class="mini-timeline">
+        <strong style="color: var(--accent);">Unlock date:</strong> March 18, 2026 — 12:00 AM<br>
+        <strong style="color: var(--accent);">Until then:</strong> this little world stays sealed.
+      </div>
+
+      <input type="password" id="masterInput" placeholder="Master password (optional)" />
+      <button onclick="unlockEarly()">Open early</button>
+      <div class="error" id="masterError"></div>
+
+      <p class="unlock-note">
+        The surprise will unlock automatically when the countdown ends.
+      </p>
+    </div>
+  </section>
 
   <section id="loginScreen" class="screen hidden">
     <div class="card">
@@ -1217,12 +1328,16 @@
       </div>
     </section>
   </main>
-<div id="finalFade" class="final-fade">
-  <h1>Happy Birthday Su ❤️</h1>
-  <p>Always yours.</p>
-</div>
+
+  <div id="finalFade" class="final-fade">
+    <h1>Happy Birthday Su ❤️</h1>
+    <p>Always yours.</p>
+  </div>
+
   <script>
     const correctPassword = "habla";
+    const masterPassword = "opensu"; // change this to your secret master password
+    const releaseDate = new Date("2026-03-18T00:00:00");
     const relationshipStartDate = new Date("2026-01-04T00:00:00");
 
     const letterMessage = `Happy birthday, my love.
@@ -1419,19 +1534,84 @@ Every single time.
     let typingStarted = false;
     let musicPlaying = false;
     let fadeInterval = null;
+    let countdownInterval = null;
 
     window.addEventListener("load", () => {
-      setTimeout(() => {
-        const loadingScreen = document.getElementById("loadingScreen");
-        const loginScreen = document.getElementById("loginScreen");
+      initializeApp();
+    });
 
+    function initializeApp() {
+      const now = new Date();
+
+      if (now < releaseDate) {
+        document.getElementById("countdownScreen").classList.remove("hidden");
+        startReleaseCountdown();
+      } else {
+        showLoadingThenLogin();
+      }
+    }
+
+    function showLoadingThenLogin() {
+      const loadingScreen = document.getElementById("loadingScreen");
+      const loginScreen = document.getElementById("loginScreen");
+
+      loadingScreen.classList.remove("hidden");
+
+      setTimeout(() => {
         loadingScreen.classList.add("hidden-loading");
 
         setTimeout(() => {
+          loadingScreen.classList.add("hidden");
           loginScreen.classList.remove("hidden");
         }, 500);
       }, 3200);
-    });
+    }
+
+    function startReleaseCountdown() {
+      const d = document.getElementById("cdDays");
+      const h = document.getElementById("cdHours");
+      const m = document.getElementById("cdMinutes");
+      const s = document.getElementById("cdSeconds");
+
+      function update() {
+        const now = new Date();
+        const diff = releaseDate - now;
+
+        if (diff <= 0) {
+          clearInterval(countdownInterval);
+          document.getElementById("countdownScreen").classList.add("hidden");
+          showLoadingThenLogin();
+          return;
+        }
+
+        const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+        const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
+        const minutes = Math.floor((diff / (1000 * 60)) % 60);
+        const seconds = Math.floor((diff / 1000) % 60);
+
+        d.textContent = days;
+        h.textContent = hours;
+        m.textContent = minutes;
+        s.textContent = seconds;
+      }
+
+      update();
+      countdownInterval = setInterval(update, 1000);
+    }
+
+    function unlockEarly() {
+      const masterInput = document.getElementById("masterInput").value.trim();
+      const masterError = document.getElementById("masterError");
+
+      if (masterInput === masterPassword) {
+        if (countdownInterval) clearInterval(countdownInterval);
+        masterError.textContent = "";
+        document.getElementById("countdownScreen").classList.add("hidden");
+        showLoadingThenLogin();
+      } else {
+        masterError.textContent = "Wrong master password.";
+      }
+    }
 
     function checkPassword() {
       const input = document.getElementById("passwordInput").value.trim().toLowerCase();
@@ -1537,7 +1717,10 @@ Every single time.
         overlay.classList.add("show");
         envelope.classList.remove("shake");
         envelope.classList.add("open");
+
         document.body.classList.add("letter-mode");
+        document.body.classList.add("envelope-focus");
+
         fadeInMusic();
         burstPetals(22);
 
@@ -1644,25 +1827,25 @@ Every single time.
     }
 
     function showEnding() {
-  const endingBox = document.getElementById("endingBox");
-  const surpriseBox = document.getElementById("surpriseBox");
-  const overlay = document.getElementById("envelopeOverlay");
+      const endingBox = document.getElementById("endingBox");
+      const surpriseBox = document.getElementById("surpriseBox");
+      const overlay = document.getElementById("envelopeOverlay");
 
-  overlay.classList.remove("show");
+      overlay.classList.remove("show");
 
-  setTimeout(() => {
-    endingBox.classList.add("show-ending");
+      setTimeout(() => {
+        endingBox.classList.add("show-ending");
 
-    endingBox.scrollIntoView({
-      behavior: "smooth",
-      block: "center"
-    });
+        endingBox.scrollIntoView({
+          behavior: "smooth",
+          block: "center"
+        });
 
-    setTimeout(() => {
-      surpriseBox.classList.add("show-surprise");
-    }, 1100);
-  }, 500);
-}
+        setTimeout(() => {
+          surpriseBox.classList.add("show-surprise");
+        }, 1100);
+      }, 500);
+    }
 
     function revealFinalSurprise() {
       const surpriseLine = document.getElementById("surpriseLine");
@@ -1677,11 +1860,11 @@ Every single time.
           block: "center"
         });
       }, 900);
+
       setTimeout(() => {
-    document.getElementById("finalFade").classList.add("show");
-  }, 9000);
-}
-    
+        document.getElementById("finalFade").classList.add("show");
+      }, 9000);
+    }
 
     function startSlideshow() {
       const img = document.getElementById("slideshowImage");
@@ -1761,9 +1944,11 @@ Every single time.
       if (e.key === "Enter" && !document.getElementById("loginScreen").classList.contains("hidden")) {
         checkPassword();
       }
+
+      if (e.key === "Enter" && !document.getElementById("countdownScreen").classList.contains("hidden")) {
+        unlockEarly();
+      }
     });
   </script>
 </body>
 </html>
-
-
