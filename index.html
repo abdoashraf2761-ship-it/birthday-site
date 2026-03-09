@@ -115,21 +115,6 @@
       font-size: 1rem;
     }
 
-    .hint-box {
-      margin: 10px 0 18px;
-      padding: 12px 14px;
-      background: rgba(255,255,255,0.72);
-      border: 1px solid rgba(214, 51, 132, 0.12);
-      border-radius: 14px;
-      color: var(--muted);
-      font-size: 0.95rem;
-      line-height: 1.7;
-    }
-
-    .hint-box strong {
-      color: var(--accent);
-    }
-
     input[type="password"] {
       width: 100%;
       padding: 15px 16px;
@@ -319,6 +304,77 @@
       border: 1px solid rgba(214, 51, 132, 0.12);
       color: var(--muted);
       line-height: 1.8;
+    }
+
+    .quiz-card {
+      max-width: 900px;
+      text-align: left;
+    }
+
+    .quiz-title {
+      text-align: center;
+      color: var(--accent);
+      font-size: 2.3rem;
+      margin-bottom: 10px;
+    }
+
+    .quiz-subtitle {
+      text-align: center;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 24px;
+    }
+
+    .quiz-question {
+      margin-bottom: 24px;
+      padding: 18px 18px 10px;
+      background: rgba(255,255,255,0.72);
+      border-radius: 18px;
+      border: 1px solid rgba(214, 51, 132, 0.10);
+    }
+
+    .quiz-question h3 {
+      color: var(--accent);
+      font-size: 1.35rem;
+      margin-bottom: 14px;
+    }
+
+    .quiz-options {
+      display: grid;
+      gap: 10px;
+      margin-bottom: 8px;
+    }
+
+    .quiz-option {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 10px 12px;
+      border-radius: 14px;
+      background: rgba(255,255,255,0.74);
+      cursor: pointer;
+      transition: 0.2s ease;
+    }
+
+    .quiz-option:hover {
+      background: white;
+      transform: translateY(-1px);
+    }
+
+    .quiz-option input {
+      margin-top: 4px;
+      accent-color: var(--accent);
+    }
+
+    .quiz-option span {
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 0.98rem;
+    }
+
+    .quiz-actions {
+      text-align: center;
+      margin-top: 10px;
     }
 
     .hero {
@@ -877,14 +933,14 @@
     }
 
     .final-fade h1 {
-      font-size: 3rem;
+      font-size: 3.2rem;
       margin-bottom: 10px;
       font-family: 'Playfair Display', serif;
     }
 
     .final-fade p {
       font-size: 1.2rem;
-      opacity: 0.8;
+      opacity: 0.85;
     }
 
     @keyframes gradientMove {
@@ -1048,7 +1104,8 @@
 
     @media (max-width: 768px) {
       .hero h1,
-      .countdown-title {
+      .countdown-title,
+      .quiz-title {
         font-size: 2.8rem;
       }
 
@@ -1107,7 +1164,8 @@
       }
 
       .hero h1,
-      .countdown-title {
+      .countdown-title,
+      .quiz-title {
         font-size: 2.25rem;
       }
 
@@ -1150,9 +1208,9 @@
 
   <section id="countdownScreen" class="screen hidden">
     <div class="card countdown-card">
-      <h1 class="countdown-title">Your surprise opens soon ❤️</h1>
+      <h1 class="countdown-title">Something special is coming… ❤️</h1>
       <p class="countdown-sub">
-        Something special is waiting for you.<br>
+        Your birthday surprise is almost ready.<br>
         It will unlock on your birthday at exactly 12:00 AM.
       </p>
 
@@ -1181,7 +1239,7 @@
       </div>
 
       <input type="password" id="masterInput" placeholder="Master password (optional)" />
-      <button onclick="unlockEarly()">Open early</button>
+      <button onclick="unlockEarly()">Enter</button>
       <div class="error" id="masterError"></div>
 
       <p class="unlock-note">
@@ -1190,22 +1248,47 @@
     </div>
   </section>
 
-  <section id="loginScreen" class="screen hidden">
-    <div class="card">
-      <h1>For My Little Girl ❤️</h1>
-      <p>
-        I made something special just for you.<br>
-        This website is for your eyes only.
+  <section id="quizScreen" class="screen hidden">
+    <div class="card quiz-card">
+      <h1 class="quiz-title">You knowing me, I couldn’t make it easy 😌</h1>
+      <p class="quiz-subtitle">
+        Before your surprise opens, you have to answer these first ❤️
       </p>
 
-      <div class="hint-box">
-        <strong>Hint:</strong> the password is the word I always say when I describe you.<br>
-        <strong>5 letter word.</strong>
+      <div class="quiz-question">
+        <h3>1) What is the best thing about me?</h3>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q1" value="1"><span>literally everything</span></label>
+          <label class="quiz-option"><input type="radio" name="q1" value="2"><span>you’re too good to be true</span></label>
+          <label class="quiz-option"><input type="radio" name="q1" value="3"><span>if I say only one thing ana keda bazlemak</span></label>
+          <label class="quiz-option"><input type="radio" name="q1" value="4"><span>mohamed moneer</span></label>
+        </div>
       </div>
 
-      <input type="password" id="passwordInput" placeholder="Enter password" />
-      <button onclick="checkPassword()">Unlock</button>
-      <div class="error" id="errorMsg"></div>
+      <div class="quiz-question">
+        <h3>2) What is the least thing u like about me?</h3>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q2" value="1"><span>literally nothing</span></label>
+          <label class="quiz-option"><input type="radio" name="q2" value="2"><span>ur the best thing that ever happened so nth</span></label>
+          <label class="quiz-option"><input type="radio" name="q2" value="3"><span>i would be a big ass liar if i said anything</span></label>
+          <label class="quiz-option"><input type="radio" name="q2" value="4"><span>since the day i saw u and im obsessed so nth but i did not want to tell you</span></label>
+        </div>
+      </div>
+
+      <div class="quiz-question">
+        <h3>3) If you were put into a situation where u had to jump off a building using only 2 forks, how would you do it?</h3>
+        <div class="quiz-options">
+          <label class="quiz-option"><input type="radio" name="q3" value="1"><span>you will sit and cry</span></label>
+          <label class="quiz-option"><input type="radio" name="q3" value="2"><span>you will say that im the best thing that ever happened to u</span></label>
+          <label class="quiz-option"><input type="radio" name="q3" value="3"><span>you will say the shahada and just jump</span></label>
+          <label class="quiz-option"><input type="radio" name="q3" value="4"><span>you will say that abdulrahman is the best thing that ever happened to me and ana zalma in this rs and he deserves to have a gift from me which is the porsche911</span></label>
+        </div>
+      </div>
+
+      <div class="quiz-actions">
+        <button onclick="submitQuiz()">Let me in 😌</button>
+        <div class="error" id="quizError"></div>
+      </div>
     </div>
   </section>
 
@@ -1330,15 +1413,20 @@
   </main>
 
   <div id="finalFade" class="final-fade">
-    <h1>Happy Birthday Su ❤️</h1>
-    <p>Always yours.</p>
+    <h1>bhbk ❤️</h1>
+    <p>always yours.</p>
   </div>
 
   <script>
-    const correctPassword = "habla";
-    const masterPassword = "Fp65NdWy"; // change this to your secret master password
+    const masterPassword = "opensu";
     const releaseDate = new Date("2026-03-18T00:00:00");
     const relationshipStartDate = new Date("2026-01-04T00:00:00");
+
+    const quizAnswers = {
+      q1: "3",
+      q2: "4",
+      q3: "4"
+    };
 
     const letterMessage = `Happy birthday, my love.
 
@@ -1547,13 +1635,13 @@ Every single time.
         document.getElementById("countdownScreen").classList.remove("hidden");
         startReleaseCountdown();
       } else {
-        showLoadingThenLogin();
+        showLoadingThenQuiz();
       }
     }
 
-    function showLoadingThenLogin() {
+    function showLoadingThenQuiz() {
       const loadingScreen = document.getElementById("loadingScreen");
-      const loginScreen = document.getElementById("loginScreen");
+      const quizScreen = document.getElementById("quizScreen");
 
       loadingScreen.classList.remove("hidden");
 
@@ -1562,7 +1650,7 @@ Every single time.
 
         setTimeout(() => {
           loadingScreen.classList.add("hidden");
-          loginScreen.classList.remove("hidden");
+          quizScreen.classList.remove("hidden");
         }, 500);
       }, 3200);
     }
@@ -1580,7 +1668,7 @@ Every single time.
         if (diff <= 0) {
           clearInterval(countdownInterval);
           document.getElementById("countdownScreen").classList.add("hidden");
-          showLoadingThenLogin();
+          showLoadingThenQuiz();
           return;
         }
 
@@ -1607,23 +1695,34 @@ Every single time.
         if (countdownInterval) clearInterval(countdownInterval);
         masterError.textContent = "";
         document.getElementById("countdownScreen").classList.add("hidden");
-        showLoadingThenLogin();
+        showLoadingThenQuiz();
       } else {
         masterError.textContent = "Wrong master password.";
       }
     }
 
-    function checkPassword() {
-      const input = document.getElementById("passwordInput").value.trim().toLowerCase();
-      const errorMsg = document.getElementById("errorMsg");
-      const loginScreen = document.getElementById("loginScreen");
+    function submitQuiz() {
+      const q1 = document.querySelector('input[name="q1"]:checked');
+      const q2 = document.querySelector('input[name="q2"]:checked');
+      const q3 = document.querySelector('input[name="q3"]:checked');
+      const quizError = document.getElementById("quizError");
 
-      if (input === correctPassword) {
-        errorMsg.textContent = "";
-        loginScreen.classList.add("fade-out");
+      if (!q1 || !q2 || !q3) {
+        quizError.textContent = "answer everything first 😌";
+        return;
+      }
+
+      if (
+        q1.value === quizAnswers.q1 &&
+        q2.value === quizAnswers.q2 &&
+        q3.value === quizAnswers.q3
+      ) {
+        quizError.textContent = "";
+        const quizScreen = document.getElementById("quizScreen");
+        quizScreen.classList.add("fade-out");
 
         setTimeout(() => {
-          loginScreen.classList.add("hidden");
+          quizScreen.classList.add("hidden");
           const main = document.getElementById("mainContent");
           main.classList.remove("hidden");
 
@@ -1638,7 +1737,7 @@ Every single time.
           startSlideshow();
         }, 800);
       } else {
-        errorMsg.textContent = "Wrong password, try again ❤️";
+        quizError.textContent = "i thought you knew me more...";
       }
     }
 
@@ -1941,15 +2040,14 @@ Every single time.
     }
 
     document.addEventListener("keydown", function (e) {
-      if (e.key === "Enter" && !document.getElementById("loginScreen").classList.contains("hidden")) {
-        checkPassword();
-      }
-
       if (e.key === "Enter" && !document.getElementById("countdownScreen").classList.contains("hidden")) {
         unlockEarly();
+      }
+
+      if (e.key === "Enter" && !document.getElementById("quizScreen").classList.contains("hidden")) {
+        submitQuiz();
       }
     });
   </script>
 </body>
 </html>
-
